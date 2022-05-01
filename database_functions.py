@@ -1,7 +1,7 @@
 import os
 import psycopg2
 
-DB_URL = os.environ.get("DATABASE_URL", "dbname=")
+DB_URL = os.environ.get("DATABASE_URL", "dbname=movie_night")
 
 # Run a SQL SELECT query and return all rows of results
 # Example:
@@ -11,6 +11,8 @@ def sql_fetch(query, parameters=[]):
   cur = conn.cursor()
   cur.execute(query, parameters)
   results = cur.fetchall()
+  print('HOSEOK')
+  print(results)
   conn.close()
   return results
 

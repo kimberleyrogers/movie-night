@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for imdb_id, title, release_year, img_src, whose_pick, country, synopsis, date_watched in results %}
+
+<h1>{{ title }} ({{ release_year }})</h1>
+<img src="{{  img_src }}">
+<h2>This was {{ whose_pick }}'s pick on {{ date_watched }}.</h2>
+<h4>Country: {{ country }}
+Synopsis: {{ synopsis }}</h4>
+
+{% endfor %}
+
+{% endblock %}

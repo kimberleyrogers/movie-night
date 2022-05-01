@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-    <ul id="multiple_results_container">
-        {% for title, release_year, img_src in results %}
-        <li id="single_movie">
-            <h2>{{ title }} ({{ release_year }})</h2>
-            <img src="{{ img_src }}" width="150px">
-        </li>
-        {% endfor %}
-    
+
+<ul id="multiple_results_container">
+    {% for id, title, release_year, img_src in results %}
+    <li id="single_movie">
+        <a href="/movie?id={{ id }}"<h2>{{ title }} ({{ release_year }})</h2>
+        <img src="{{ img_src }}" width="150px"></a>
+    </li>
+    {% endfor %}
 </ul>
-
-
 
 {% endblock %}
