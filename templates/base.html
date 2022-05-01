@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movie 🎬 night</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <nav>
+        <a href="/">our menu</a>
+        <a href="">contact us</a>
+        <!-- {% if username == None %} -->
+            <a href="">login</a>
+            <a href="">sign up</a> 
+        <!-- {% else %} -->
+        <a href="">add something to our menu</a>    
+        <a href="">logout</a> 
+        {% endif %}
+    </nav>
+    <!-- nav bar containing 
+    about
+    login - if logged in: add movies
+    members
+    movies
+    sign up-->
+    {% block content %}
+    {% endblock %}
+    <footer>
+        <br>FOOTER - Literally just to check if my CSS works.
+    </footer>
+</body>
+</html>

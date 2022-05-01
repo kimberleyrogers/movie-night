@@ -1,0 +1,23 @@
+/* all for the movies page */
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    display: grid;
+    place-items: center;
+}
+
+li {
+    list-style-type: none;
+}
+
+#multiple-results-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#single_movie {
+    flex: 1 1 150px;
+    flex: 0 1 150px;
+    margin: 5px;
+}
