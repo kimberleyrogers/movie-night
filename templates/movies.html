@@ -1,13 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 
-<ul id="multiple_results_container">
-    {% for id, title, release_year, img_src in results %}
-    <li id="single_movie">
-        <a href="/movie?id={{ id }}"<h2>{{ title }} ({{ release_year }})</h2>
-        <img src="{{ img_src }}" width="150px"></a>
-    </li>
-    {% endfor %}
-</ul>
+<div id="movies_main_container">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo repellendus repellat animi nam, corporis explicabo aliquid modi. Aliquam non itaque, ipsa minus voluptate perspiciatis enim magnam. Voluptas pariatur accusamus omnis.</p>
+
+    <ul id="multiple_results_container">
+        {% for id, title, release_year, img_src in results %}
+        <li id="single_movie">
+            
+            <a href="/movie?id={{ id }}">
+                <img src="{{ img_src }}" width="150px">
+                <h2>{{ title }} ({{ release_year }})</h2>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
 
 {% endblock %}

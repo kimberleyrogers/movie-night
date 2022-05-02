@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS poll;
 
 CREATE TABLE users (
     id serial PRIMARY KEY,
@@ -20,4 +21,14 @@ CREATE TABLE movies (
     release_year integer,
     img_src varchar(300),
     synopsis varchar(3000)
+);
+
+CREATE TABLE poll (
+  id serial PRIMARY KEY,
+  imdb_id varchar(15) NOT NULL,
+  title varchar(50),
+  img_src varchar(300),
+  runtime_mins integer,
+  genre varchar(50),
+  release_year integer
 );

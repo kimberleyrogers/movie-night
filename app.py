@@ -46,18 +46,58 @@ def movie():
     return render_template('movie.html', results = results)
 
 #initially just to display a search result from imdb
+# @app.route('/poll_creator')
+# def poll_creator():
+    
+#     # movie_params = {
+#     #     'title': title,
+#     #     'apikey': 'k_f11wle6a',
+#     #     'genres': genre,
+#     #     'moviemeter': runtimemin, runtimemax,
+#     #     'groups': top_250,oscar_nominees,razzie_nominees,
+#     # }
+#     search_term = request.args.get('movie_search')
+#     movie_id_to_add = request.args.get('id')
+#     if search_term:
+#         response = requests.get(f'https://imdb-api.com/en/API/SearchTitle/' + API_KEY + '/' + search_term + '/')
+#         'https://imdb-api.com/en/API/AdvancedSearch/' + API_KEY + '/' + search_term + '/')'
+#         response_json = response.json()
+#         results = response_json['results']
+#         print(results)
+#         return render_template('add_movie.html', results = results)
+
+#     print(results)
+#     return render_template('poll_creator.html', results = results)
 @app.route('/poll_creator')
 def poll_creator():
-    search_term = "North by Northwest"
-    response = requests.get(f'https://imdb-api.com/en/API/SearchTitle/' + API_KEY + '/' + search_term + '/')
-    response_json = response.json()
-    results = response_json['results']
-    # response = requests.get(SEARCH_TITLE_URL.format(id=recipe_id), params=params)
-    # RESPONSE_json = response.json()
-    # title = RESPONSE_json['title']
-
-    print(results)
-    return render_template('poll_creator.html', results = results)
+    search_term = request.args.get('movie_search')
+    movie_id_to_add = request.args.get('id')
+    if search_term:
+        response = requests.get(f'https://imdb-api.com/en/API/SearchTitle/' + API_KEY + '/' + search_term + '/')
+        response_json = response.json()
+        results = response_json['results']
+        print(results)
+        return render_template('poll_creator.html', results = results)
+    if movie_id_to_add:
+            conn = psycopg2.connect(DB_URL)
+            cur = conn.cursor()
+            cur.execute('SELECT title, release_year, img_src FROM poll WHERE imdb_id = %s', [movie_id_to_add])
+            database_results = cur.fetchall()
+            # conn.close()
+            if database_results:
+                # say "it's already in there"
+                film_exists_in_poll = 'this movie is already in your poll. Just watch it already'
+                return render_template('poll_creator.html', film_exists_in_poll = film_exists_in_poll, database_results = database_results)
+            else:
+                response = requests.get(f'https://imdb-api.com/en/API/Title/' + API_KEY + '/' + movie_id_to_add + '/')
+                response_json = response.json()
+                print('MIN YOONGI')
+                print(response_json)
+                movie_to_add_api_results = response_json
+                film_doesnt_exist = 'this movie is not in the poll - we can try to add it now'
+                return render_template('poll_creator.html', film_doesnt_exist = film_doesnt_exist, movie_to_add_api_results = movie_to_add_api_results)    
+    else:
+        return render_template('poll_creator.html')
 
 @app.route('/add_movie')
 def add_movie():
@@ -88,6 +128,14 @@ def add_movie():
                 print(response_json)
                 movie_to_add_api_results = response_json
                 film_doesnt_exist = 'this movie is not in the database - we can try to add it now'
+
+                # conn = psycopg2.connect(DB_URL)
+                # cur = conn.cursor()
+                # cur.execute('INSERT INTO poll (imdb_id) VALUES (%s);', [imdb_id])
+                # conn.commit()
+                # conn.close()
+
+
                 return render_template('add_movie.html', film_doesnt_exist = film_doesnt_exist, movie_to_add_api_results = movie_to_add_api_results)    
         else:
             return render_template('add_movie.html')

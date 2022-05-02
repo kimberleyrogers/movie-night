@@ -1,16 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
 
-{{ results }}
-<ul>
-    {% for result in results %}
-    <li id="multiple-results">
-        {{ result['title'] }}
-        {{ result['id'] }}
-        {{ result['description'] }}
-        <img src="{{ result['image'] }}">
-    </li>
-    {% endfor %}
-</ul>
+<div id="poll_creator_main_container">
+    
+    
+    <div id="poll_creator_left_column">
+        <h1>search for a movie to add to your poll</h1>
+        <form method="GET" action="/poll_creator">
+            <input name="movie_search">
+        </form>
+        <ul>
+        {% for result in results %}
+        <li id="multiple-results">
+            {{ result['title'] }}
+            {{ result['id'] }}
+            {{ result['description'] }}
+            <img src="{{ result['image'] }}" width="150px">
+            <form method="GET" action="/poll_creator">
+                <button><a href="/poll_creator?id={{ result['id'] }}">Add to my poll</a></button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    </div>
+    <div id="poll_creator_right_column">
+        {% if film_exists_in_poll %}
+        YOUR POLL IS BEING CREATED - but this film is already in it
+        {% endif %}
+        test
+        {% if film_doesnt_exist %}
+        YOUR POLL IS BEING CREATED - we'll add this film
+        {% endif %}
+    </div>
+    
+
+</div>
 
 {% endblock %}

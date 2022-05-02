@@ -1,69 +1,70 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>search for a movie we've watched to add it to the database</h1>
+<div id="add_movie_container">
+    <h1>search for a movie we've watched to add it to the database</h1>
 
-<form method="GET" action="/add_movie">
-    <input name="movie_search">
-</form>
+    <form method="GET" action="/add_movie">
+        <input name="movie_search">
+    </form>
 
-{{ results }}
-<ul>
-    {% for result in results %}
-    <li id="multiple-results">
-        {{ result['title'] }}
-        {{ result['id'] }}
-        {{ result['description'] }}
-        <img src="{{ result['image'] }}" width="150px">
-        <form method="GET" action="/add_movie">
-            <button><a href="/add_movie?id={{ result['id'] }}">We watched this!</a></button>
+    <ul>
+        {% for result in results %}
+        <li id="multiple-results">
+            {{ result['title'] }}
+            {{ result['id'] }}
+            {{ result['description'] }}
+            <img src="{{ result['image'] }}" width="150px">
+            <form method="GET" action="/add_movie">
+                <button><a href="/add_movie?id={{ result['id'] }}">We watched this!</a></button>
+            </form>
+            
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if film_doesnt_exist %}
+        <img src="{{ movie_to_add_api_results['image'] }}" width="150px">
+        {{ movie_to_add_api_results['title'] }}
+        {{ movie_to_add_api_results['countries'] }}
+        {{ movie_to_add_api_results['year'] }}
+        {{ movie_to_add_api_results['id'] }}
+        {{ movie_to_add_api_results['plot'] }}
+        
+        {{ film_doesnt_exist }}
+        Just tell us:
+        
+        <form method="POST" action="/add_movie_action">
+            <label for="whose_pick">Who picked this movie?</label>
+            <select id="whose_pick" name="whose_pick">
+                <option value="4">Rochelle</option>
+                <option value="1">Kim</option>
+                <option value="3">Pierce</option>
+                <option value="2">Oliver</option>
+                <option value="6">Sam</option>
+                <option value="5">Al</option>
+                </select> 
+            <label for="whose_pick">When did you watch it?</label>
+            <input type="date" id="date_watched" name="date_watched" value="2020-01-01" min="2017-09-18">
+            <input type="hidden" name="imdb_id" value="{{ movie_to_add_api_results['id'] }}">
+            <input type="hidden" name="title" value="{{ movie_to_add_api_results['title'] }}">
+            <input type="hidden" name="country" value="{{ movie_to_add_api_results['countries'] }}">
+            <input type="hidden" name="release_year" value="{{ movie_to_add_api_results['year']}}">
+            <input type="hidden" name="img_src" value="{{ movie_to_add_api_results['image'] }}">
+            <input type="hidden" name="synopsis" value="{{ movie_to_add_api_results['plot'] }}">
+            <button>Save</button>
         </form>
         
-    </li>
-    {% endfor %}
-</ul>
+    {% endif %}
 
-{% if film_doesnt_exist %}
-    <img src="{{ movie_to_add_api_results['image'] }}" width="150px">
-    {{ movie_to_add_api_results['title'] }}
-    {{ movie_to_add_api_results['countries'] }}
-    {{ movie_to_add_api_results['year'] }}
-    {{ movie_to_add_api_results['id'] }}
-    {{ movie_to_add_api_results['plot'] }}
-    
-    {{ film_doesnt_exist }}
-    Just tell us:
-    
-    <form method="POST" action="/add_movie_action">
-        <label for="whose_pick">Who picked this movie?</label>
-        <select id="whose_pick" name="whose_pick">
-            <option value="4">Rochelle</option>
-            <option value="1">Kim</option>
-            <option value="3">Pierce</option>
-            <option value="2">Oliver</option>
-            <option value="6">Sam</option>
-            <option value="5">Al</option>
-            </select> 
-        <label for="whose_pick">When did you watch it?</label>
-        <input type="date" id="date_watched" name="date_watched" value="2020-01-01" min="2017-01-01">
-        <input type="hidden" name="imdb_id" value="{{ movie_to_add_api_results['id'] }}">
-        <input type="hidden" name="title" value="{{ movie_to_add_api_results['title'] }}">
-        <input type="hidden" name="country" value="{{ movie_to_add_api_results['countries'] }}">
-        <input type="hidden" name="release_year" value="{{ movie_to_add_api_results['year']}}">
-        <input type="hidden" name="img_src" value="{{ movie_to_add_api_results['image'] }}">
-        <input type="hidden" name="synopsis" value="{{ movie_to_add_api_results['plot'] }}">
-        <button>Save</button>
-    </form>
-    
-{% endif %}
-
-{% if film_exists %}
-    {{ database_results }}
-    {% for title, release_year, whose_pick, img_src in database_results %}
-        {{ title }} ({{ release_year }})
-        <img src="{{ img_src}}" width="150px">
-        {{ film_exists }} It was {{ whose_pick }}'s pick!
-    {% endfor %}
-    
-{% endif %}
+    {% if film_exists %}
+        {{ database_results }}
+        {% for title, release_year, whose_pick, img_src in database_results %}
+            {{ title }} ({{ release_year }})
+            <img src="{{ img_src}}" width="150px">
+            {{ film_exists }} It was {{ whose_pick }}'s pick!
+        {% endfor %}
+        
+    {% endif %}
+</div>
 {% endblock %}
