@@ -28,7 +28,7 @@ CREATE TABLE poll (
   imdb_id varchar(15) NOT NULL,
   title varchar(50),
   img_src varchar(300),
-  runtime_mins integer,
+  runtime_mins varchar(20),
   genre varchar(50),
   release_year integer
 );

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<article>
+    <ul>
+        {% for imdb_id, title, img_src, runtime_mins, genre, release_year in poll_content %}
+        <li>
+            <img src="{{ img_src}}" width="150px">
+            {{ id }} {{ title }} ({{ release_year }})
+            {{ genre }} {{ runtime_mins }}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="/add_movie"><button>add another film to the poll</button></a>
+    <a href="/clear_poll_action"><button>start again</button></a>
+
+</article>
+
+
+{% endblock %}

@@ -1,17 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<div id="movie_main_container">
-    {% for imdb_id, title, release_year, img_src, whose_pick, country, synopsis, date_watched in results %}
-    <div id="movie_image_column">
+<article id="movie_main_container">
+    <figure id="movie_image_column">
         <img src="{{  img_src }}" width="150px">
-    </div>
-    <div id="movie_info_column">
+    </figure>
+    <details id="movie_info_column">
         <h1>{{ title }} ({{ release_year }})</h1>
         <h2>This was {{ whose_pick }}'s pick on {{ date_watched }}.</h2>
-        <h4>Country: {{ country }}
-        Synopsis: {{ synopsis }}</h4>
-    </div>
-
-    {% endfor %}
-</div>
+        <h4>Country: {{ country }} Synopsis: {{ synopsis }}</h4>
+    </details>
+</article>
 {% endblock %}

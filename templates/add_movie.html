@@ -18,7 +18,10 @@
             <form method="GET" action="/add_movie">
                 <button><a href="/add_movie?id={{ result['id'] }}">We watched this!</a></button>
             </form>
-            
+            <form method="POST" action="/add_poll_action">
+                <input type="hidden" name="kimbo" value="{{ result['id'] }}">
+                <button>Add this to my poll</button>
+            </form>
         </li>
         {% endfor %}
     </ul>
