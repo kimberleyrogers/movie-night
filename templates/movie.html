@@ -2,12 +2,13 @@
 {% block content %}
 <article id="movie_main_container">
     <figure id="movie_image_column">
-        <img src="{{  img_src }}" width="150px">
+        <img src="{{  img_src }}" width="250px">
     </figure>
-    <details id="movie_info_column">
+    <div id="movie_info_column">
         <h1>{{ title }} ({{ release_year }})</h1>
-        <h2>This was {{ whose_pick }}'s pick on {{ date_watched }}.</h2>
-        <h4>Country: {{ country }} Synopsis: {{ synopsis }}</h4>
-    </details>
+        <h2>This was {{ person }}'s pick on {{ date_watched }}.</h2>
+        <h4>Country: {{ country }}</h4>
+        <h4>Synopsis: {{ synopsis }}</h4>
+    </div>
 </article>
 {% endblock %}

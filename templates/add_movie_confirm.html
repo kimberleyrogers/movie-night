@@ -1,34 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div id="add_movie_container">
-    <div id="render_one_entire_page">
-        <h1>search imdb</h1>
-        <h2>for a movie to add to the database or create a unique poll</h2>
-        <form method="GET" action="/add_movie">
-            <input name="movie_search">
-        </form>
-    </div>
-    
-    <div id="render_two_second_div"
-        <ul>
-            {% for result in results %}
-            <li id="multiple-results">
-                <br><img src="{{ result['image'] }}" width="150px">
-                <br>{{ result['title'] }}
-                <br>{{ result['description'] }}
-                <form method="GET" action="/add_movie_confirm">
-                    <button><a href="/add_movie_confirm?id={{ result['id'] }}">We watched {{ result['title'] }}</a></button>
-                </form>
-                <form method="POST" action="/add_poll_action">
-                    <input type="hidden" name="kimbo" value="{{ result['id'] }}">
-                    <button>Add {{ result['title'] }} to my poll</button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-
+    <div id="add_movie_confirm_yes_container">
     {% if film_doesnt_exist %}
         <img src="{{ movie_to_add_api_results['image'] }}" width="150px">
         {{ movie_to_add_api_results['title'] }}
@@ -37,8 +10,9 @@
         {{ movie_to_add_api_results['id'] }}
         {{ movie_to_add_api_results['plot'] }}
         
-        {{ film_doesnt_exist }}
-        Just tell us:
+        <h3>Great! Let's add this to the record.</h3>
+        
+        <h1>Just tell us:</h1>
         
         <form method="POST" action="/add_movie_action">
             <label for="whose_pick">Who picked this movie?</label>
@@ -62,7 +36,8 @@
         </form>
         
     {% endif %}
-
+    </div>
+    <div id="add_movie_confirm_no_container"></div>
     {% if film_exists %}
         {{ database_results }}
         {% for title, release_year, whose_pick, img_src in database_results %}
@@ -70,7 +45,7 @@
             <img src="{{ img_src}}" width="150px">
             {{ film_exists }} It was {{ whose_pick }}'s pick!
         {% endfor %}
-        
     {% endif %}
-</div>
+    </div>  
+
 {% endblock %}

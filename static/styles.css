@@ -2,7 +2,8 @@
 body {
     display: grid;
     grid-template-rows: auto 1fr auto;
-  }
+    font-family: 'Roboto', sans-serif;
+}
 
 header {
     padding: 2rem;
@@ -14,6 +15,10 @@ footer {
     padding: 2rem;
     background-color: rgb(120, 201, 201);
     border: 5px solid red;
+}
+
+li {
+    list-style-type: none;
 }
 /* for page 'movies.html' */
 #movies_main_container {
@@ -35,6 +40,10 @@ footer {
     margin: 5px;
     border: 5px solid red;
 }
+#single_movie a {
+    text-decoration: none;
+}
+
 /* for page 'movie.html' */
 #movie_main_container {
     display: grid;
@@ -81,6 +90,10 @@ footer {
 
 #movie_info_column {
     border: 5px solid red;
+}
+
+#movie_info_column h1 {
+    font-family: 'Rubik Mono One', sans-serif;
 }
 
 #add_movie_container {

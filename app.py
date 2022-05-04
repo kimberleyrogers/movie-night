@@ -36,7 +36,7 @@ def movies():
 @app.route('/movie')
 def movie():
     id = request.args.get('id')
-    results = functions.sql_fetch('SELECT imdb_id, title, release_year, img_src, whose_pick, country, synopsis, date_watched FROM movies WHERE id = %s',[id])
+    results = functions.sql_fetch('SELECT movies.imdb_id, movies.title, movies.release_year, movies.img_src, movies.whose_pick, movies.country, movies.synopsis, movies.date_watched, users.name FROM movies, users WHERE movies.id = %s AND users.id = movies.whose_pick',[id])
     imdb_id = results[0][0]
     title = results[0][1]
     release_year = results[0][2]
@@ -45,40 +45,62 @@ def movie():
     country = results[0][5]
     synopsis = results[0][6]
     date_watched = results[0][7]
-    return render_template('movie.html', imdb_id = imdb_id, title = title, release_year = release_year, img_src = img_src, whose_pick = whose_pick, country = country, synopsis = synopsis, date_watched = date_watched)
+    person = results[0][8]
+    return render_template('movie.html', imdb_id = imdb_id, title = title, release_year = release_year, img_src = img_src, whose_pick = whose_pick, country = country, synopsis = synopsis, date_watched = date_watched, person = person)
 
 
 @app.route('/add_movie')
 def add_movie():
     search_term = request.args.get('movie_search')
-    movie_id_to_add = request.args.get('id')
     if search_term:
         response = requests.get(f'https://imdb-api.com/en/API/SearchTitle/' + API_KEY + '/' + search_term + '/')
         response_json = response.json()
         results = response_json['results']
         print(results)
         return render_template('add_movie.html', results = results)
+    # else:
+    #     if movie_id_to_add:
+    #         conn = psycopg2.connect(DB_URL)
+    #         cur = conn.cursor()
+    #         cur.execute('SELECT title, release_year, whose_pick, img_src FROM movies WHERE imdb_id = %s', [movie_id_to_add])
+    #         database_results = cur.fetchall()
+    #         # conn.close()
+    #         if database_results:
+    #             # say "it's already in there"
+    #             film_exists = 'this movie is already in the database, WE ALREADY WATCHED IT'
+    #             return render_template('add_movie.html', film_exists = film_exists, database_results = database_results)
+    #         else:
+    #             response = requests.get(f'https://imdb-api.com/en/API/Title/' + API_KEY + '/' + movie_id_to_add + '/')
+    #             response_json = response.json()
+    #             print('JIMIN')
+    #             print(response_json)
+    #             movie_to_add_api_results = response_json
+    #             film_doesnt_exist = 'this movie is not in the database - we can try to add it now'
+    #             return render_template('add_movie.html', film_doesnt_exist = film_doesnt_exist, movie_to_add_api_results = movie_to_add_api_results)    
     else:
-        if movie_id_to_add:
-            conn = psycopg2.connect(DB_URL)
-            cur = conn.cursor()
-            cur.execute('SELECT title, release_year, whose_pick, img_src FROM movies WHERE imdb_id = %s', [movie_id_to_add])
-            database_results = cur.fetchall()
-            # conn.close()
-            if database_results:
-                # say "it's already in there"
-                film_exists = 'this movie is already in the database, WE ALREADY WATCHED IT'
-                return render_template('add_movie.html', film_exists = film_exists, database_results = database_results)
-            else:
-                response = requests.get(f'https://imdb-api.com/en/API/Title/' + API_KEY + '/' + movie_id_to_add + '/')
-                response_json = response.json()
-                print('JIMIN')
-                print(response_json)
-                movie_to_add_api_results = response_json
-                film_doesnt_exist = 'this movie is not in the database - we can try to add it now'
-                return render_template('add_movie.html', film_doesnt_exist = film_doesnt_exist, movie_to_add_api_results = movie_to_add_api_results)    
-        else:
-            return render_template('add_movie.html')
+        return render_template('add_movie.html')
+
+@app.route('/add_movie_confirm', methods=['GET'])
+def add_movie_confirm():
+    movie_id_to_add = request.args.get('id')
+    database_results = functions.sql_fetch('SELECT title, release_year, whose_pick, img_src FROM movies WHERE imdb_id = %s', [movie_id_to_add])
+    # conn = psycopg2.connect(DB_URL)
+    # cur = conn.cursor()
+    # cur.execute('SELECT title, release_year, whose_pick, img_src FROM movies WHERE imdb_id = %s', [movie_id_to_add])
+    # database_results = cur.fetchall()
+    # conn.close()
+    if database_results:
+        # say "it's already in there"
+        film_exists = 'this movie is already in the database, WE ALREADY WATCHED IT'
+        return render_template('add_movie_confirm.html', film_exists = film_exists, database_results = database_results)
+    else:
+        response = requests.get(f'https://imdb-api.com/en/API/Title/' + API_KEY + '/' + movie_id_to_add + '/')
+        response_json = response.json()
+        print('JIMIN')
+        print(response_json)
+        movie_to_add_api_results = response_json
+        film_doesnt_exist = 'this movie is not in the database - we can try to add it now'
+        return render_template('add_movie_confirm.html', film_doesnt_exist = film_doesnt_exist, movie_to_add_api_results = movie_to_add_api_results)
 
 @app.route('/add_movie_action', methods=['POST'])
 def add_movie_action():
