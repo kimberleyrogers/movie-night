@@ -1,8 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
-test member page
-
-{{ name }}
+<div id="member_main_container">
+    <div id="member_first_column"
+        <h1>{{ name }}</h1>
+        <img src="/static/images/{{ user_id }}.jpeg" width="250px">
+        {{ name }} has {{ fact_one }} movies in the database.
+        Movie Night has watched more films from {{ fact_two_answer }} than any other year!
+    </div>
+    <div id="member_second_column"    
+        <ul id="multiple_results_container">
+            {% for id, title, release_year, img_src in results %}
+            <li id="single_movie">
+                <a href="/movie?id={{ id }}">
+                    <img src="{{ img_src }}" width="150px">
+                    <h2>{{ title }} ({{ release_year }})</h2>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
 {% endblock %}

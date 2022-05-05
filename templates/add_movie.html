@@ -3,6 +3,9 @@
 
 <div id="add_movie_container">
     <div id="render_one_entire_page">
+        {% if no_results %}
+        {{ no_results }}
+        {% endif %}
         <h1>search imdb</h1>
         <h2>for a movie to add to the database or create a unique poll</h2>
         <form method="GET" action="/add_movie">
@@ -39,33 +42,29 @@
                     <input type="radio" id="crime" name="genre" value="crime">
                     <label for="crime">Crime</label>
                 </div>
-            </fieldset>
-            <label for="min_runtime">Min Runtime</label>
-            <input id ="min_runtime" name="min_runtime">
-            <label for="max_runtime">Max Runtime</label>
-            <input id ="max_runtime" name="max_runtime">
-            <fieldset>
+          
                 <legend>Your film must be:</legend>
                 <div>
-                    <input type="radio" id="oscar_nom" name="group" value="oscar_nom">
+                    <input type="radio" id="oscar_nom" name="awards" value="oscar_nominees">
                     <label for="oscar_nom">Oscar Nominated Films</label>
                 </div>
                 <div>
-                    <input type="radio" id="razzie_nom" name="group" value="razzie_nom">
+                    <input type="radio" id="razzie_nom" name="awards" value="razzie_nominees">
                     <label for="razzie_nom">Razzie Nominated Films</label>
                 </div>
                 <div>
-                    <input type="radio" id="top_250" name="group" value="top_250">
+                    <input type="radio" id="top_250" name="awards" value="top_250">
                     <label for="top_250">imdb Top 250 Films</label>
                 </div>
                 <div>
-                    <input type="radio" id="best_pic" name="group" value="best_pic">
+                    <input type="radio" id="best_pic" name="awards" value="oscar_best_picture_winners">
                     <label for="best_pic">Best Picture Winners</label>
                 </div>
             </fieldset>
             <button class="movie_search" type="submit" value="Advanced Search">Advanced Search</button>
         </form>
     </div>
+
     
 <!-- big search function -->
 <!--  -->

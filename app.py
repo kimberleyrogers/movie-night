@@ -52,32 +52,49 @@ def movie():
 
 @app.route('/add_movie')
 def add_movie():
-    search_term = request.args.get('movie_search')
-    if search_term:
-        response = requests.get(f'https://imdb-api.com/en/API/SearchTitle/' + API_KEY + '/' + search_term + '/')
+    title_search = request.args.get('movie_search')
+    actor_search = request.args.get('actor_search')
+    advanced_search_genre = request.args.get('genre')
+    advanced_search_awards = request.args.get('awards')
+    if title_search:
+        response = requests.get(f'https://imdb-api.com/en/API/SearchTitle/' + API_KEY + '/' + title_search + '/')
         response_json = response.json()
         results = response_json['results']
+        print('title hoseok')
+        print(results)
+        if results:
+            return render_template('add_movie.html', results = results)
+        else:
+            no_results = "Sorry, we didn't find anything matching " + title_search
+            return render_template('add_movie.html', no_results = no_results)
+    elif actor_search:
+        response = requests.get(f'https://imdb-api.com/en/API/SearchName/' + API_KEY + '/' + actor_search + '/')
+        response_json = response.json()
+        results = response_json['results']
+        print('actor taehyung')
         print(results)
         return render_template('add_movie.html', results = results)
-    # else:
-    #     if movie_id_to_add:
-    #         conn = psycopg2.connect(DB_URL)
-    #         cur = conn.cursor()
-    #         cur.execute('SELECT title, release_year, whose_pick, img_src FROM movies WHERE imdb_id = %s', [movie_id_to_add])
-    #         database_results = cur.fetchall()
-    #         # conn.close()
-    #         if database_results:
-    #             # say "it's already in there"
-    #             film_exists = 'this movie is already in the database, WE ALREADY WATCHED IT'
-    #             return render_template('add_movie.html', film_exists = film_exists, database_results = database_results)
-    #         else:
-    #             response = requests.get(f'https://imdb-api.com/en/API/Title/' + API_KEY + '/' + movie_id_to_add + '/')
-    #             response_json = response.json()
-    #             print('JIMIN')
-    #             print(response_json)
-    #             movie_to_add_api_results = response_json
-    #             film_doesnt_exist = 'this movie is not in the database - we can try to add it now'
-    #             return render_template('add_movie.html', film_doesnt_exist = film_doesnt_exist, movie_to_add_api_results = movie_to_add_api_results)    
+    elif advanced_search_genre or advanced_search_awards:
+        print('jimin')
+        awards = request.args.get('awards')
+        genre = request.args.get('genre')
+        print('jungkook')
+        movie_params = {
+            'genres': genre,
+            'groups': awards,
+            'apikey': API_KEY
+        }
+        response = requests.get(f'https://imdb-api.com/API/AdvancedSearch/', movie_params)
+        print('RM')    
+        response_json = response.json()
+        results = response_json['results']
+        print('namjoon advanced')
+        print(results)
+        if results:    
+            return render_template('add_movie.html', results = results)   
+        else:
+            no_results = "Sorry, we didn't find anything matching " + awards + " and " + genre
+            return render_template('add_movie.html', no_results = no_results)
     else:
         return render_template('add_movie.html')
 
@@ -137,21 +154,23 @@ def clear_poll_action():
 
 @app.route('/member', methods=['GET'])
 def member():
-    id = request.args.get('id')
-    results = functions.sql_fetch('SELECT name FROM users WHERE id = %s', [id])
+    user_id = request.args.get('id')
+    results = functions.sql_fetch('SELECT name FROM users WHERE id = %s', [user_id])
     name = results[0][0]
-    return render_template('member.html', name = name)
-    # d serial PRIMARY KEY,
-    # imdb_id varchar(15) NOT NULL,
-    # whose_pick integer,
-    # FOREIGN KEY(whose_pick)
-    #   REFERENCES users(id),
-    # title varchar(50),
-    # date_watched date,
-    # country varchar(20),
-    # release_year integer,
-    # img_src varchar(300),
-    # synopsis varchar(3000)
+    results = functions.sql_fetch('SELECT id, title, release_year, img_src FROM movies WHERE whose_pick = %s', [user_id])
+
+    fact_one = functions.sql_fetch('SELECT COUNT(*) FROM movies WHERE whose_pick = %s', [user_id])
+    fact_two = functions.sql_fetch('SELECT release_year, COUNT(*) FROM movies GROUP BY release_year ORDER BY count DESC;', [])
+    fact_two_answer = fact_two[0][0]
+    print('fact_one')
+    print(fact_one)
+    print('fact_two')
+    print(fact_two)
+    print('fact_two_answer')
+    print(fact_two_answer)
+
+
+    return render_template('member.html', name = name, user_id = user_id, results = results, fact_one = fact_one, fact_two_answer = fact_two_answer)
 
 if __name__ == '__main__':
     app.run(debug=True)
