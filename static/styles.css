@@ -20,6 +20,9 @@ footer {
 li {
     list-style-type: none;
 }
+
+/* for homepage */
+
 /* for page 'movies.html' */
 #movies_main_container {
     display: grid;

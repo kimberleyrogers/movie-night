@@ -6,10 +6,81 @@
         <h1>search imdb</h1>
         <h2>for a movie to add to the database or create a unique poll</h2>
         <form method="GET" action="/add_movie">
-            <input name="movie_search">
+            <h3><label for="movie_search">Search by Title</label></h3>
+            <input id="movie_search" name="movie_search">
+            <button class="movie_search" type="submit" value="Search by Title">Search by Title</button>
+        </form>
+        <form method="GET" action="/add_movie">
+            <h3><label for="actor_search">Search by Actor</label></h3>
+            <input id ="actor_search" name="actor_search">
+            <button class="movie_search" type="submit" value="Search by Actor">Search by Actor</button>
+        </form>
+        <form method="GET" action="/add_movie">
+            <h3><label for="advanced_search">Advanced Search</label></h3>
+            <fieldset>
+                <legend>Select a genre:</legend>
+                <div>
+                    <input type="radio" id="action" name="genre" value="action">
+                    <label for="action">Action</label>
+                </div>
+                <div>
+                    <input type="radio" id="animation" name="genre" value="animation">
+                    <label for="animation">Animation</label>
+                </div>
+                <div>
+                    <input type="radio" id="biography" name="genre" value="biography">
+                    <label for="biography">Biography</label>
+                </div>
+                <div>
+                    <input type="radio" id="comedy" name="genre" value="comedy">
+                    <label for="comedy">Comedy</label>
+                </div>
+                <div>
+                    <input type="radio" id="crime" name="genre" value="crime">
+                    <label for="crime">Crime</label>
+                </div>
+            </fieldset>
+            <label for="min_runtime">Min Runtime</label>
+            <input id ="min_runtime" name="min_runtime">
+            <label for="max_runtime">Max Runtime</label>
+            <input id ="max_runtime" name="max_runtime">
+            <fieldset>
+                <legend>Your film must be:</legend>
+                <div>
+                    <input type="radio" id="oscar_nom" name="group" value="oscar_nom">
+                    <label for="oscar_nom">Oscar Nominated Films</label>
+                </div>
+                <div>
+                    <input type="radio" id="razzie_nom" name="group" value="razzie_nom">
+                    <label for="razzie_nom">Razzie Nominated Films</label>
+                </div>
+                <div>
+                    <input type="radio" id="top_250" name="group" value="top_250">
+                    <label for="top_250">imdb Top 250 Films</label>
+                </div>
+                <div>
+                    <input type="radio" id="best_pic" name="group" value="best_pic">
+                    <label for="best_pic">Best Picture Winners</label>
+                </div>
+            </fieldset>
+            <button class="movie_search" type="submit" value="Advanced Search">Advanced Search</button>
         </form>
     </div>
     
+<!-- big search function -->
+<!--  -->
+
+<!-- search by actor https://imdb-api.com/en/API/SearchName/k_f11wle6a/Natalie_Portman
+advanced search
+genre
+title groups (oscar nommed, razzie nommed, imdb top 250, best picture-winning)
+runtime?
+
+?
+moviemeter=100,200
+sort=num_votes,asc
+https://imdb-api.com/API/AdvancedSearch/k_f11wle6a?genres=action,animation,biography,comedy,crime,documentary,drama,family,fantasy,film_noir,horror,musical,mystery,romance,sci_fi,thriller,western&groups=top_250,oscar_nominees,oscar_best_picture_winners,razzie_nominees&moviemeter=60,90
+-->
     <div id="render_two_second_div"
         <ul>
             {% for result in results %}
@@ -29,48 +100,5 @@
         </ul>
     </div>
 
-    {% if film_doesnt_exist %}
-        <img src="{{ movie_to_add_api_results['image'] }}" width="150px">
-        {{ movie_to_add_api_results['title'] }}
-        {{ movie_to_add_api_results['countries'] }}
-        {{ movie_to_add_api_results['year'] }}
-        {{ movie_to_add_api_results['id'] }}
-        {{ movie_to_add_api_results['plot'] }}
-        
-        {{ film_doesnt_exist }}
-        Just tell us:
-        
-        <form method="POST" action="/add_movie_action">
-            <label for="whose_pick">Who picked this movie?</label>
-            <select id="whose_pick" name="whose_pick">
-                <option value="4">Rochelle</option>
-                <option value="1">Kim</option>
-                <option value="3">Pierce</option>
-                <option value="2">Oliver</option>
-                <option value="6">Sam</option>
-                <option value="5">Al</option>
-                </select> 
-            <label for="whose_pick">When did you watch it?</label>
-            <input type="date" id="date_watched" name="date_watched" value="2020-01-01" min="2017-09-18">
-            <input type="hidden" name="imdb_id" value="{{ movie_to_add_api_results['id'] }}">
-            <input type="hidden" name="title" value="{{ movie_to_add_api_results['title'] }}">
-            <input type="hidden" name="country" value="{{ movie_to_add_api_results['countries'] }}">
-            <input type="hidden" name="release_year" value="{{ movie_to_add_api_results['year']}}">
-            <input type="hidden" name="img_src" value="{{ movie_to_add_api_results['image'] }}">
-            <input type="hidden" name="synopsis" value="{{ movie_to_add_api_results['plot'] }}">
-            <button>Save</button>
-        </form>
-        
-    {% endif %}
-
-    {% if film_exists %}
-        {{ database_results }}
-        {% for title, release_year, whose_pick, img_src in database_results %}
-            {{ title }} ({{ release_year }})
-            <img src="{{ img_src}}" width="150px">
-            {{ film_exists }} It was {{ whose_pick }}'s pick!
-        {% endfor %}
-        
-    {% endif %}
 </div>
 {% endblock %}

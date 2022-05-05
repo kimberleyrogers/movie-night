@@ -4,6 +4,8 @@ import psycopg2
 import json
 import os
 import functions
+import moment
+from datetime import datetime
 
 DB_URL = os.environ.get("DATABASE_URL", "dbname=movie_night")
 
@@ -48,7 +50,6 @@ def movie():
     person = results[0][8]
     return render_template('movie.html', imdb_id = imdb_id, title = title, release_year = release_year, img_src = img_src, whose_pick = whose_pick, country = country, synopsis = synopsis, date_watched = date_watched, person = person)
 
-
 @app.route('/add_movie')
 def add_movie():
     search_term = request.args.get('movie_search')
@@ -84,11 +85,6 @@ def add_movie():
 def add_movie_confirm():
     movie_id_to_add = request.args.get('id')
     database_results = functions.sql_fetch('SELECT title, release_year, whose_pick, img_src FROM movies WHERE imdb_id = %s', [movie_id_to_add])
-    # conn = psycopg2.connect(DB_URL)
-    # cur = conn.cursor()
-    # cur.execute('SELECT title, release_year, whose_pick, img_src FROM movies WHERE imdb_id = %s', [movie_id_to_add])
-    # database_results = cur.fetchall()
-    # conn.close()
     if database_results:
         # say "it's already in there"
         film_exists = 'this movie is already in the database, WE ALREADY WATCHED IT'
@@ -138,6 +134,24 @@ def your_poll():
 def clear_poll_action():
     functions.sql_write('TRUNCATE TABLE poll;')
     return redirect('/your_poll')
+
+@app.route('/member', methods=['GET'])
+def member():
+    id = request.args.get('id')
+    results = functions.sql_fetch('SELECT name FROM users WHERE id = %s', [id])
+    name = results[0][0]
+    return render_template('member.html', name = name)
+    # d serial PRIMARY KEY,
+    # imdb_id varchar(15) NOT NULL,
+    # whose_pick integer,
+    # FOREIGN KEY(whose_pick)
+    #   REFERENCES users(id),
+    # title varchar(50),
+    # date_watched date,
+    # country varchar(20),
+    # release_year integer,
+    # img_src varchar(300),
+    # synopsis varchar(3000)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -6,7 +6,9 @@
     </figure>
     <div id="movie_info_column">
         <h1>{{ title }} ({{ release_year }})</h1>
-        <h2>This was {{ person }}'s pick on {{ date_watched }}.</h2>
+        <form method="GET" action="/member">
+            <h2>This was <a href="/member?id={{ whose_pick }}">{{ person }}'s</a> pick on {{ date_watched }}.</h2>
+        </form>
         <h4>Country: {{ country }}</h4>
         <h4>Synopsis: {{ synopsis }}</h4>
     </div>

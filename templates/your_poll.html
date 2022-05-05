@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <article>
+    <h1>Your next movie night poll....</h1>
     <ul>
         {% for imdb_id, title, img_src, runtime_mins, genre, release_year in poll_content %}
         <li>
