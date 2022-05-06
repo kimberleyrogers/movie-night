@@ -3,13 +3,16 @@
 
     <div id="add_movie_confirm_yes_container">
     {% if film_doesnt_exist %}
-        <img src="{{ movie_to_add_api_results['image'] }}" width="150px">
-        <h2>{{ movie_to_add_api_results['title'] }}</h2>
-        <h2>{{ movie_to_add_api_results['year'] }}</h2>
-        <h2>{{ movie_to_add_api_results['countries'] }}</h2>
-        <h4>{{ movie_to_add_api_results['plot'] }}</h4>
-        
-        <h3>Great! Let's add this to the database.</h3>
+        <figure id="add_movie_image_column">
+            <img src="{{ movie_to_add_api_results['image'] }}" width="150px">
+        </figure>
+        <div id="add_movie_info_column">
+            <h1>{{ movie_to_add_api_results['title'] }} ({{ movie_to_add_api_results['year'] }})</h1>
+            <h4>Country: {{ movie_to_add_api_results['countries'] }}</h4>
+            <h4>Synopsis: {{ movie_to_add_api_results['plot'] }}</h4>
+        </div>
+        <div id="add_movie_confirm_extra_info">
+            <h3>This is a new addition to the database, let's add it!</h3>
         
         <h1>Just tell us:</h1>
         
@@ -33,18 +36,29 @@
             <input type="hidden" name="synopsis" value="{{ movie_to_add_api_results['plot'] }}">
             <button>Save</button>
         </form>
+    </div>
         
     {% endif %}
     </div>
-    <div id="add_movie_confirm_no_container"></div>
+
+    <div id="add_movie_confirm_no_container">
+
+                    
     {% if film_exists %}
-        {{ database_results }}
-        {% for title, release_year, whose_pick, img_src in database_results %}
-            {{ title }} ({{ release_year }})
+    {% for title, release_year, whose_pick, img_src in database_results %}
+        <figure id="add_movie_no_image_column">
             <img src="{{ img_src}}" width="150px">
-            {{ film_exists }} It was {{ whose_pick }}'s pick!
+        </figure>
+
+        <div id="add_movie_no_info_column">
+            <h1>{{ title }} ({{ release_year }})</h1>
+            <h3>{{ film_exists }} It was <a href="/member?id={{ whose_pick }}">{{ member_first_name_tidy }}</a>'s pick!</h3>
+        </div>
+        
         {% endfor %}
     {% endif %}
+
+
     </div>  
 
 {% endblock %}

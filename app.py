@@ -59,8 +59,6 @@ def add_movie():
         response = requests.get(f'https://imdb-api.com/en/API/SearchTitle/' + API_KEY + '/' + title_search + '/')
         response_json = response.json()
         results = response_json['results']
-        print('title hoseok')
-        print(results)
         if results:
             return render_template('add_movie.html', results = results)
         else:
@@ -70,25 +68,19 @@ def add_movie():
         response = requests.get(f'https://imdb-api.com/en/API/SearchName/' + API_KEY + '/' + actor_search + '/')
         response_json = response.json()
         results = response_json['results']
-        print('actor taehyung')
-        print(results)
         return render_template('add_movie.html', results = results)
     elif advanced_search_genre or advanced_search_awards:
         print('jimin')
         awards = request.args.get('awards')
         genre = request.args.get('genre')
-        print('jungkook')
         movie_params = {
             'genres': genre,
             'groups': awards,
             'apikey': API_KEY
         }
-        response = requests.get(f'https://imdb-api.com/API/AdvancedSearch/', movie_params)
-        print('RM')    
+        response = requests.get(f'https://imdb-api.com/API/AdvancedSearch/', movie_params)   
         response_json = response.json()
         results = response_json['results']
-        print('namjoon advanced')
-        print(results)
         if results:    
             return render_template('add_movie.html', results = results)   
         else:
@@ -101,10 +93,13 @@ def add_movie():
 def add_movie_confirm():
     movie_id_to_add = request.args.get('id')
     database_results = functions.sql_fetch('SELECT title, release_year, whose_pick, img_src FROM movies WHERE imdb_id = %s', [movie_id_to_add])
+    member_name = database_results[0][2]
     if database_results:
         # say "it's already in there"
-        film_exists = 'this movie is already in the database, WE ALREADY WATCHED IT'
-        return render_template('add_movie_confirm.html', film_exists = film_exists, database_results = database_results)
+        member_first_name = functions.sql_fetch('SELECT name FROM users WHERE id = %s', [member_name])
+        member_first_name_tidy = member_first_name[0][0]
+        film_exists = 'We already have a record of watching this film!'
+        return render_template('add_movie_confirm.html', film_exists = film_exists, database_results = database_results, member_first_name_tidy = member_first_name_tidy)
     else:
         response = requests.get(f'https://imdb-api.com/en/API/Title/' + API_KEY + '/' + movie_id_to_add + '/')
         response_json = response.json()

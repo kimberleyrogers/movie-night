@@ -4,7 +4,7 @@
 <div id="add_movie_container">
     <div id="render_one_entire_page">
         {% if no_results %}
-        {{ no_results }}
+        <p class="api_error_message">{{ no_results }}. Search again?</p>
         {% endif %}
         <h1>search imdb</h1>
         <h2>for a movie to add to the database or create a unique poll</h2>
@@ -21,7 +21,7 @@
         <form method="GET" action="/add_movie">
             <h3><label for="advanced_search">Advanced Search</label></h3>
             <fieldset>
-                <legend>Select a genre:</legend>
+                <legend>(optional) Select a genre:</legend>
                 <div>
                     <input type="radio" id="action" name="genre" value="action">
                     <label for="action">Action</label>
@@ -43,7 +43,7 @@
                     <label for="crime">Crime</label>
                 </div>
           
-                <legend>Your film must be:</legend>
+                <legend>(optional) Select a category:</legend>
                 <div>
                     <input type="radio" id="oscar_nom" name="awards" value="oscar_nominees">
                     <label for="oscar_nom">Oscar Nominated Films</label>
