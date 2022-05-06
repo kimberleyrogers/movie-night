@@ -3,11 +3,9 @@
 
 <div id="movies_main_container">
     <p>An inevitably incomplete list of every movie watched between 2017 - 2022 at Fitzroy North's finest movie night.</p>
-
     <ul id="multiple_results_container">
         {% for id, title, release_year, img_src in results %}
         <li id="single_movie">
-            
             <a href="/movie?id={{ id }}">
                 <img src="{{ img_src }}" width="150px">
                 <h2>{{ title }} ({{ release_year }})</h2>
@@ -16,6 +14,5 @@
         {% endfor %}
     </ul>
 </div>
-
 
 {% endblock %}

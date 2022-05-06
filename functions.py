@@ -2,6 +2,7 @@ import os
 import psycopg2
 from flask import request
 
+# credit to Katie Bell for providing this SQL function template
 DB_URL = os.environ.get("DATABASE_URL", "dbname=movie_night")
 
 # Run a SQL SELECT query and return all rows of results

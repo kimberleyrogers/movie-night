@@ -123,12 +123,8 @@ def add_movie_action():
 @app.route('/add_poll_action', methods=['POST'])
 def add_poll_action():
     search_term = request.form.get('kimbo')
-    print('rm')
-    print(search_term)
     response = requests.get(f'https://imdb-api.com/en/API/Title/' + API_KEY + '/' + search_term + '/')
     response_json = response.json()
-    print('jhope')
-    print(response_json)
     imdb_id = response_json['id']
     title = response_json['title']
     img_src = response_json['image']
@@ -162,18 +158,16 @@ def member():
     results = functions.sql_fetch('SELECT name FROM users WHERE id = %s', [user_id])
     name = results[0][0]
     results = functions.sql_fetch('SELECT id, title, release_year, img_src FROM movies WHERE whose_pick = %s', [user_id])
-
-    fact_one = functions.sql_fetch('SELECT COUNT(*) FROM movies WHERE whose_pick = %s', [user_id])
-    fact_two = functions.sql_fetch('SELECT release_year, COUNT(*) FROM movies GROUP BY release_year ORDER BY count DESC;', [])
-    fact_two_answer = fact_two[0][0]
-    print('fact_one')
-    print(fact_one)
-    print('fact_two')
-    print(fact_two)
-    print('fact_two_answer')
-    print(fact_two_answer)
-
-    return render_template('member.html', name = name, user_id = user_id, results = results, fact_one = fact_one, fact_two_answer = fact_two_answer)
+    # fact_one = functions.sql_fetch('SELECT COUNT(*) FROM movies WHERE whose_pick = %s', [user_id])
+    # fact_two = functions.sql_fetch('SELECT release_year, COUNT(*) FROM movies GROUP BY release_year ORDER BY count DESC;', [])
+    # fact_two_answer = fact_two[0][0]
+    # print('fact_one')
+    # print(fact_one)
+    # print('fact_two')
+    # print(fact_two)
+    # print('fact_two_answer')
+    # print(fact_two_answer)
+    return render_template('member.html', name = name, user_id = user_id, results = results)
 
 if __name__ == '__main__':
     app.run(debug=True)
