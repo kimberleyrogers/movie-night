@@ -136,7 +136,6 @@ li {
     font-size: 50px;
 }
 
-
 /* for page 'about.html' */
 #about_page_container {
     display: grid;
@@ -220,6 +219,24 @@ li {
 #member_first_column img {
     border-radius: 10%;
     border: 3px solid white;
+}
+
+/* for page 'your_poll.html */
+#your_poll_container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+#your_poll_movies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#your_poll_movie {
+    flex: 1 1 150px;
+    flex: 0 1 150px;
+    margin: 5px;
 }
 
 /* general */

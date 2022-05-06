@@ -132,10 +132,11 @@ def add_poll_action():
 @app.route('/your_poll')
 def your_poll():
     poll_content = functions.sql_fetch('SELECT imdb_id, title, img_src, runtime_mins, genre, release_year from poll;')
-    # if poll_content:
-    return render_template('your_poll.html', poll_content = poll_content)
-    # else:
-    #     return render_template('your_poll.html')
+    if poll_content:
+        return render_template('your_poll.html', poll_content = poll_content)
+    else:
+        poll_empty_message = "Your poll is empty. Search for a movie to add to your next movie night poll."
+        return render_template('your_poll.html', poll_empty_message = poll_empty_message)
 
 @app.route('/clear_poll_action')
 def clear_poll_action():
