@@ -5,7 +5,7 @@
     <div id="member_first_column">
         <h1>{{ name }}</h1>
         <div id="img_div">
-            <img src="/static/images/{{ user_id }}.jpeg" width="500px">
+            <img src="/static/images/{{ user_id }}.jpeg" height="400px">
         </div>
     </div>
     <div id="member_second_column">  
@@ -13,7 +13,7 @@
             {% for id, title, release_year, img_src in results %}
             <li id="member_single_movie">
                 <a href="/movie?id={{ id }}">
-                    <img src="{{ img_src }}" width="100px">
+                    <img src="{{ img_src }}" height="100px">
                     <h2>{{ title }} ({{ release_year }})</h2>
                 </a>
             </li>
