@@ -64,8 +64,10 @@ li {
     flex: 0 1 150px;
     margin: 5px;
 }
+
 #single_movie a {
     text-decoration: none;
+    color: black;
 }
 
 /* for page 'movie.html' */
@@ -73,6 +75,30 @@ li {
     display: grid;
     grid-template-columns: minmax(150px, 25%) 1fr;
 }
+
+#movie_info_column h1 {
+    font-family: 'Koulen', cursive;
+    font-size: 50px;
+}
+
+/* for page 'add_movie.html' */
+#multiple_results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#single_result {
+    flex: 1 1 150px;
+    flex: 0 1 150px;
+    margin: 5px;
+}
+
+#single_result a {
+    text-decoration: none;
+    color: white;
+}
+
 /* for page 'about.html' */
 #about_page_container {
     display: grid;
@@ -95,73 +121,69 @@ li {
     gap: 5%;
 }
 
-/* for page 'poll_creator.html' */
-#poll_creator_main_container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    
+/* for page 'members.html */
+
+#members_container {
+    /* display: grid;
+    grid-template-: 1fr 1fr 1fr 1fr 1fr 1fr; */
+    display: flex;
+    flex-wrap: nowrap;
 }
 
-#poll_creator_left_column {
-    
+.bio_pic {
+    border-radius: 10%;
+    border: 3px solid white;
 }
 
-#poll_creator_right_column {
-   
-}
-
-#about_page_blurb {
-
-}
-
-#about_page_image {
-    
-}
-
-#movie_image_column {
-    
-}
-
-#movie_info_column {
- 
-}
-
-#movie_info_column h1 {
-    font-family: 'Rubik Mono One', sans-serif;
-}
-
-#add_movie_container {
-}
-
+/* for page 'member.html' */
 #member_main_container {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+#member_results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#member_single_movie {
+    flex: 1 1 150px;
+    flex: 0 1 150px;
+    margin: 5px;
+}
+
+#member_single_movie a {
+    text-decoration: none;
+    color: black;
+    font-size: 10px;
 }
 
 #member_first_column {
-    border: 4px solid green;
+    display: grid;
+    grid-template-rows: auto 1fr;
 }
 
 #member_first_column h1 {
-    font-size: 90px;
+    font-size: 50px;
+    color:black;
+    display: grid;
+    place-items: center;
+}
+#member_first_column #img_div {
+    display: grid;
+    place-items: center;
 }
 
 #member_first_column img {
     border-radius: 10%;
     border: 3px solid white;
-    display: block;
 }
 
-#member_second_column {
-    border: 4px solid green;
-}
 
-/* #about_page_blurb {
-    display: grid;
-    grid-template-rows: auto 1fr;
-} */
 
-/* CSS */
+
+/* Button CSS from https://getcssscan.com/css-buttons-examples */
 button {
   background: rgb(239, 137, 20);
   border: 1px solid rgb(239, 137, 20);

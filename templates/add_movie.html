@@ -66,33 +66,21 @@
     </div>
 
     
-<!-- big search function -->
-<!--  -->
-
-<!-- search by actor https://imdb-api.com/en/API/SearchName/k_f11wle6a/Natalie_Portman
-advanced search
-genre
-title groups (oscar nommed, razzie nommed, imdb top 250, best picture-winning)
-runtime?
-
-?
-moviemeter=100,200
-sort=num_votes,asc
-https://imdb-api.com/API/AdvancedSearch/k_f11wle6a?genres=action,animation,biography,comedy,crime,documentary,drama,family,fantasy,film_noir,horror,musical,mystery,romance,sci_fi,thriller,western&groups=top_250,oscar_nominees,oscar_best_picture_winners,razzie_nominees&moviemeter=60,90
--->
-    <div id="render_two_second_div"
-        <ul>
+    <div id="render_two_second_div">
+        <ul id="multiple_results">
             {% for result in results %}
-            <li id="multiple-results">
+            <li id="single_result">
                 <br><img src="{{ result['image'] }}" width="150px">
                 <br>{{ result['title'] }}
                 <br>{{ result['description'] }}
+                <br>
                 <form method="GET" action="/add_movie_confirm">
-                    <button><a href="/add_movie_confirm?id={{ result['id'] }}">We watched {{ result['title'] }}</a></button>
+                    <button><a href="/add_movie_confirm?id={{ result['id'] }}">We watched it!</a></button>
                 </form>
+                <br>
                 <form method="POST" action="/add_poll_action">
                     <input type="hidden" name="kimbo" value="{{ result['id'] }}">
-                    <button>Add {{ result['title'] }} to my poll</button>
+                    <button>Add it to my poll!</button>
                 </form>
             </li>
             {% endfor %}

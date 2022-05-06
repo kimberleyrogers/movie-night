@@ -4,8 +4,6 @@ import psycopg2
 import json
 import os
 import functions
-import moment
-from datetime import datetime
 
 DB_URL = os.environ.get("DATABASE_URL", "dbname=movie_night")
 
@@ -153,6 +151,11 @@ def clear_poll_action():
     functions.sql_write('TRUNCATE TABLE poll;')
     return redirect('/your_poll')
 
+@app.route('/members')
+def members():
+    results = functions.sql_fetch('SELECT id, name FROM users', [])
+    return render_template('members.html', results = results)
+
 @app.route('/member', methods=['GET'])
 def member():
     user_id = request.args.get('id')
@@ -170,20 +173,7 @@ def member():
     print('fact_two_answer')
     print(fact_two_answer)
 
-
     return render_template('member.html', name = name, user_id = user_id, results = results, fact_one = fact_one, fact_two_answer = fact_two_answer)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-# movie_params = {
-#     'title': title,
-#     'apikey': 'k_f11wle6a',
-#     'genres': genre,
-#     'moviemeter': runtimemin, runtimemax,
-#     'groups': top_250,oscar_nominees,razzie_nominees,
-# }
-
-#      response = requests.get(f'https://imdb-api.com/en/API/SearchTitle/' + API_KEY + '/' + search_term + '/')
-#         'https://imdb-api.com/en/API/AdvancedSearch/' + API_KEY + '/' + search_term + '/')'

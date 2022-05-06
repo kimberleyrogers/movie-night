@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="members_container">
+
+    {% for id, name in results %}
+
+    <a href="/member?id={{ id }}">
+        <img class="bio_pic" src="/static/images/{{ id }}.jpeg" alt="{{ name }}" height="300px">
+    </a>
+
+    {% endfor %}
+</div>
+
+{% endblock %}
