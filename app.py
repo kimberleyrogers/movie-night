@@ -28,6 +28,7 @@ def home():
 
 @app.route('/about')
 def about():
+    # all_movies = functions.sql_fetch('SELECT id, title, release_year, img_src from movies;')
     return render_template('about.html')
 
 @app.route('/movies')

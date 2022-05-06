@@ -11,27 +11,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav>
+            <p id="logo">movie night</p>
             <a href="/about">about</a>
             <a href="/movies">the movie list</a>
-            <a href="/add_movie">the poll creator</a>
+            <a href="/add_movie">make a poll</a>
             <a href="/add_movie">add a movie</a>
+            
         </nav>
+        
     </header>
-    
-    <!-- nav bar containing 
-    about
-    login - if logged in: add movies
-    members
-    movies
-    sign up-->
     {% block content %}
     {% endblock %}
     <footer>
-        Kimberley Rogers 2022
+        <a href="https://github.com/kimberleyrogers">Kimberley Rogers (2022)</a>
     </footer>
 </body>
 </html>
