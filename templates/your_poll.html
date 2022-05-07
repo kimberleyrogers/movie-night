@@ -13,23 +13,16 @@
                 <a href="/clear_poll_action"><button>start again</button></a>
             {% endif %}
         </article>
-     
-            
         <ul id="your_poll_movies">
             {% for imdb_id, title, img_src, runtime_mins, genre, release_year in poll_content %}
             <li id="your_poll_movie">
                 <img src="{{ img_src}}" width="150px">
-                
                 <p>{{ title }}({{ release_year }})</p> 
                 <p>{{ genre }}</p>
                 <p>{{ runtime_mins }}</p>
-        
             </li>
             {% endfor %}
         </ul>
-
-       
     </div>
-
 {% endblock %}
 
