@@ -1,28 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div id="your_poll_container">
-        <article id="your_poll_blurb">
-            {% if poll_empty_message %}
-                <h1>{{ poll_empty_message }}</h1>
-                <a href="/add_movie"><button>search for movies</button></a>
-            {% endif %}
-            {% if poll_content %}
-                <h1>Your next movie night poll....</h1>
-                <a href="/add_movie"><button>add another film to the poll</button></a>
-                <a href="/clear_poll_action"><button>start again</button></a>
-            {% endif %}
-        </article>
-        <ul id="your_poll_movies">
-            {% for imdb_id, title, img_src, runtime_mins, genre, release_year in poll_content %}
-            <li id="your_poll_movie">
-                <img src="{{ img_src}}" width="150px">
-                <p>{{ title }}({{ release_year }})</p> 
-                <p>{{ genre }}</p>
-                <p>{{ runtime_mins }}</p>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+<div id="your_poll_container">
+    <article id="your_poll_blurb">
+        {% if poll_empty_message %}
+            <h1>{{ poll_empty_message }}</h1>
+            <a href="/add_movie"><button>search for movies</button></a>
+        {% endif %}
+        {% if poll_content %}
+            <h1>Your next movie night poll....</h1>
+            <a href="/add_movie"><button>add another film to the poll</button></a>
+            <a href="/clear_poll_action"><button>start again</button></a>
+        {% endif %}
+    </article>
+    <ul id="your_poll_movies">
+        {% for imdb_id, title, img_src, runtime_mins, genre, release_year in poll_content %}
+        <li id="your_poll_movie">
+            <img src="{{ img_src}}" width="150px">
+            <p>{{ title }}({{ release_year }})</p> 
+            <p>{{ genre }}</p>
+            <p>{{ runtime_mins }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
 {% endblock %}
 

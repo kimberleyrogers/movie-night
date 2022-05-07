@@ -165,10 +165,9 @@ li {
 
 /* for page 'members.html */
 #members_container {
-    /* display: grid;
-    grid-template-: 1fr 1fr 1fr 1fr 1fr 1fr; */
     display: flex;
     flex-wrap: nowrap;
+    justify-content: space-around;
 }
 
 .bio_pic {
