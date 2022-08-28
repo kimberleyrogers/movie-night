@@ -5,6 +5,7 @@ import json
 import os
 import functions
 
+# 'variable name in code' = how to find in both local and heroku environment('heroku variable name', 'local variable name')
 DB_URL = os.environ.get("DATABASE_URL", "dbname=movie_night")
 API_KEY = os.environ.get("MY_API_KEY")
 
