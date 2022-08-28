@@ -34,7 +34,7 @@ To run yourself:
 
 
 ## 🤖 FUTURE
-Whilst this is a personal project for use my friends, I'd like to create a version which allows a user and a nominated group of their friends, family, coworkers to use the framework to create their own movie night and store their picks.
+Whilst this is a personal project for use with my friends, I'd like to create a version which allows a user and a nominated group of their friends, family, coworkers to use the framework to create their own movie night and store their picks.
 
 + Add a password protection to the 'add movie' function for data integrity
 + Expand the genre search to include more genres
