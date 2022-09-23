@@ -20,7 +20,7 @@ The site consists of:
 
 
 ## 🖥 TECHNICAL
-Built with Python, Flask, HTML, CSS, SQL and by utilising the imdb API.
+Deployed full stack CRUD website built with Python, Flask, Jinja, HTML, CSS, postgreSQL and utilising a RESTful movie website API.
 
 To run yourself:
 + Import the requirements.txt file
